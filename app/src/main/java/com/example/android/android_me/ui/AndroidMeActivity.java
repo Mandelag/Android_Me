@@ -25,6 +25,8 @@ import com.example.android.android_me.BodyPartsFragment;
 import com.example.android.android_me.R;
 import com.example.android.android_me.data.AndroidImageAssets;
 
+import java.util.ArrayList;
+
 // This activity will display a custom Android image composed of three body parts: head, body, and legs
 public class AndroidMeActivity extends AppCompatActivity {
 
@@ -42,16 +44,17 @@ public class AndroidMeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_android_me);
-        BodyPartsFragment headFragment = new BodyPartsFragment().setmImageIds(AndroidImageAssets.getHeads()).setmListIndex(0);
-        BodyPartsFragment bodyFragment = new BodyPartsFragment().setmImageIds(AndroidImageAssets.getBodies()).setmListIndex(0);
-        BodyPartsFragment footFragment = new BodyPartsFragment().setmImageIds(AndroidImageAssets.getLegs()).setmListIndex(0);
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        fragmentManager.beginTransaction()
-                .add(R.id.head_container, headFragment)
-                .add(R.id.body_container, bodyFragment)
-                .add(R.id.foot_container, footFragment)
-                .commit();
-
+        if (savedInstanceState == null) {
+            BodyPartsFragment headFragment = new BodyPartsFragment().setmImageIds((ArrayList<Integer>) AndroidImageAssets.getHeads()).setmListIndex(0);
+            BodyPartsFragment bodyFragment = new BodyPartsFragment().setmImageIds((ArrayList<Integer>) AndroidImageAssets.getBodies()).setmListIndex(0);
+            BodyPartsFragment footFragment = new BodyPartsFragment().setmImageIds((ArrayList<Integer>) AndroidImageAssets.getLegs()).setmListIndex(0);
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            fragmentManager.beginTransaction()
+                    .add(R.id.head_container, headFragment)
+                    .add(R.id.body_container, bodyFragment)
+                    .add(R.id.foot_container, footFragment)
+                    .commit();
+        }
         // TODO (5) Create a new BodyPartFragment instance and display it using the FragmentManager
     }
 }
